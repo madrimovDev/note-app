@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useLocation, Outlet } from 'react-router-dom'
 import {
   FormOutlined,
@@ -61,12 +61,34 @@ function Navbar() {
 }
 
 export default function Layout() {
+  const [notes, setNotes] = useState([
+    {
+      id: 1,
+      title: 'Note Object Title',
+      description: 'Note Object Desc',
+    },
+  ])
+
+  function addNote(title, description) {
+    const newNote = {
+      id: Date.now(),
+      title,
+      description,
+    }
+    setNotes([...notes, newNote])
+  }
+
   return (
     <div className='h-screen flex'>
       <Sidebar />
       <div className='w-full'>
         <Navbar />
-        <Outlet />
+        <Outlet
+          context={{
+            notes,
+            addNote,
+          }}
+        />
       </div>
     </div>
   )
