@@ -83,6 +83,22 @@ export default function Layout() {
     setNotes(filtredNotes)
   }
 
+  function editNote(id, title, description){
+    const mappedNotes = notes.map((note) => {
+      if(note.id === id){
+        return {
+          id: note.id,
+          title,
+          description
+        }
+      } else{
+        return note
+      }
+    })
+    setNotes(mappedNotes)
+
+  }
+
   return (
     <div className='h-screen flex'>
       <Sidebar />
@@ -92,7 +108,8 @@ export default function Layout() {
           context={{
             notes,
             addNote,
-            deleteNote
+            deleteNote,
+            editNote
           }}
         />
       </div>
