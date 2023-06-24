@@ -4,6 +4,9 @@ import Modal from '../components/Modal'
 import NoteCard from '../components/NoteCard'
 import { useOutletContext } from 'react-router-dom'
 import EditModal from '../components/EditModal'
+import { AnimatePresence } from 'framer-motion'
+
+import {motion} from 'framer-motion'
 
 export default function Notes() {
   const { notes, addNote, deleteNote, editNote } = useOutletContext()
@@ -21,7 +24,7 @@ export default function Notes() {
   }
 
   return (
-    <div className='p-4'>
+    <motion.div initial={{y: -20, opacity: 0}} animate={{y: 0, opacity: 1}} exit={{y: -20, opacity: 0}} className='p-4'>
       <Modal addNote={addNote} />
       <EditModal
         show={show}
@@ -30,16 +33,19 @@ export default function Notes() {
         closeEditModal={closeEditModal}
       />
       <div className='grid grid-cols-5 gap-4 mt-4'>
-        {notes.map((note) => {
-          return (
-            <NoteCard
-              note={note}
-              deleteNote={deleteNote}
-              openEditModal={openEditModal}
-            />
-          )
-        })}
+        <AnimatePresence>
+          {notes.map((note) => {
+            return (
+              <NoteCard
+                key={note.id}
+                note={note}
+                deleteNote={deleteNote}
+                openEditModal={openEditModal}
+              />
+            )
+          })}
+        </AnimatePresence>
       </div>
-    </div>
+    </motion.div>
   )
 }
