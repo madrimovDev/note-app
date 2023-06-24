@@ -78,6 +78,11 @@ export default function Layout() {
     setNotes([...notes, newNote])
   }
 
+  function deleteNote(id) {
+    const filtredNotes = notes.filter(note => note.id !== id)
+    setNotes(filtredNotes)
+  }
+
   return (
     <div className='h-screen flex'>
       <Sidebar />
@@ -87,6 +92,7 @@ export default function Layout() {
           context={{
             notes,
             addNote,
+            deleteNote
           }}
         />
       </div>
