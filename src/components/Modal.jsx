@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react'
 import { CloseOutlined } from '@ant-design/icons'
 import { AnimatePresence, motion } from 'framer-motion'
+import { NoteContext } from '../context/NoteContext'
 
-export default function Modal({ addNote }) {
+export default function Modal() {
+  const { addNote } = useContext(NoteContext)
   const [show, setShow] = useState(false)
 
   function submitHandler(event) {

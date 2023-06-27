@@ -1,9 +1,12 @@
 import { CloseOutlined } from '@ant-design/icons'
-import React from 'react'
+import React, { useContext } from 'react'
+import { EditModalContext } from '../context/EditModalContext'
+import { NoteContext } from '../context/NoteContext'
 
-export default function EditModal({ show, note, editNote, closeEditModal }) {
-
-  function submitHandler(event){
+export default function EditModal() {
+  const { show, note, closeEditModal } = useContext(EditModalContext)
+  const { editNote } = useContext(NoteContext)
+  function submitHandler(event) {
     event.preventDefault()
     const titleInput = event.target.title
     const descInput = event.target.description
@@ -29,7 +32,10 @@ export default function EditModal({ show, note, editNote, closeEditModal }) {
 
   return (
     <div className='fixed top-0 left-0 h-screen w-full bg-black/50 z-10'>
-      <form onSubmit={submitHandler} className='absolute top-20 left-1/2 -translate-x-1/2 max-w-sm w-full bg-white rounded-lg p-4 flex flex-col gap-4'>
+      <form
+        onSubmit={submitHandler}
+        className='absolute top-20 left-1/2 -translate-x-1/2 max-w-sm w-full bg-white rounded-lg p-4 flex flex-col gap-4'
+      >
         <button
           type='button'
           onClick={() => closeEditModal()}

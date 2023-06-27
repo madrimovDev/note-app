@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link, useLocation, Outlet } from 'react-router-dom'
 import {
   FormOutlined,
   FileZipOutlined,
   SearchOutlined,
 } from '@ant-design/icons'
+
+import Modal from './Modal'
 
 function Sidebar() {
   const { pathname } = useLocation()
@@ -40,11 +42,11 @@ function Sidebar() {
 
 function Navbar() {
   return (
-    <nav className='p-4 bg-stone-100 flex justify-between items-center'>
+    <nav className='p-4 z-10 relative bg-stone-100 flex justify-between items-center'>
       <a href='/' className='text-xl font-bold text-stone-700'>
         Diyorbek's <span className='text-sky-500'>Notes</span>
       </a>
-
+      <Modal />
       <form className='bg-white rounded-lg p-2 flex items-center gap-2 w-[300px]'>
         <input
           type='search'
@@ -61,57 +63,12 @@ function Navbar() {
 }
 
 export default function Layout() {
-  const [notes, setNotes] = useState([
-    {
-      id: 1,
-      title: 'Note Object Title',
-      description: 'Note Object Desc',
-    },
-  ])
-
-  function addNote(title, description) {
-    const newNote = {
-      id: Date.now(),
-      title,
-      description,
-    }
-    setNotes([...notes, newNote])
-  }
-
-  function deleteNote(id) {
-    const filtredNotes = notes.filter(note => note.id !== id)
-    setNotes(filtredNotes)
-  }
-
-  function editNote(id, title, description){
-    const mappedNotes = notes.map((note) => {
-      if(note.id === id){
-        return {
-          id: note.id,
-          title,
-          description
-        }
-      } else{
-        return note
-      }
-    })
-    setNotes(mappedNotes)
-
-  }
-
   return (
     <div className='h-screen flex'>
       <Sidebar />
       <div className='w-full'>
         <Navbar />
-        <Outlet
-          context={{
-            notes,
-            addNote,
-            deleteNote,
-            editNote
-          }}
-        />
+        <Outlet />
       </div>
     </div>
   )

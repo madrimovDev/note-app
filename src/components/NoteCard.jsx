@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { EditFilled, DeleteFilled } from '@ant-design/icons'
 import { motion } from 'framer-motion'
+import { EditModalContext } from '../context/EditModalContext'
+import { NoteContext } from '../context/NoteContext'
 
-export default function NoteCard({ note, deleteNote, openEditModal }) {
+export default function NoteCard({ note }) {
+  const { openEditModal } = useContext(EditModalContext)
+  const { deleteNote } = useContext(NoteContext)
   return (
     <motion.div
       initial={{ scale: 0.8, opacity: 0 }}
